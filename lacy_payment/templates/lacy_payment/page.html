@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Payment Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% load static %} <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    {% load static %} <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="container">
+
+                    {% comment %}
+                    <!--<form class="text-center border border-light p-5" action="{% url "pay_via_momo" %}" method="post">
+
+                        <p class="h4 mb-4">Pay Via MoMo</p>
+                        <input type="text" name="name" id="name" class="form-control mb-4" placeholder="Enter your name">
+                        <input type="text" name="phone" id="phone" class="form-control mb-4" placeholder="Enter your phone">
+                        <input class="btn btn-primary btn-block my-4" type="submit">Pay 500 XFA Via Mobile Money</input>
+                    </form>-->
+                    <a class="btn btn-primary btn-block my-4" role="button" href="{% url "pay_via_momo" %}">Pay 500 XFA Via Mobile Money</a>
+                    {% endcomment %}
+
+                    <form action="https://api.monetbil.com/pay/v2.1/ymtQxIwHMYQL3DuMaF2fmLeT3MTY7u" method="get" data-monetbil="form">
+                        <button class="btn btn-primary btn-block my-4" type="submit">Pay 5000 XFA Via Mobile Money</button>
+                    </form>
+
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="container">
+
+                    {% comment %}
+                    <form class="text-center border border-light p-5" action="{% url "pay_via_crypto" %}">
+                        {% csrf_token %}
+                        <p class="h4 mb-4">Pay Via Crypto Currency</p>
+                        <input type="text" name="name" id="name" class="form-control mb-4" placeholder="Enter your name">
+                        <input type="text" id="walletref" class="form-control mb-4" placeholder="Wallet Reference">
+                        <button class="btn btn-secondary btn-block my-4" type="submit">Pay 0.00017 BitCoin</button>
+                    </form>
+                    <a class="btn btn-secondary btn-block my-4" role="button" href="{% url "pay_via_crypto" %}">Pay 0.00017 BitCoin</a>
+                    {% endcomment %}
+
+                    <form action="https://www.coinpayments.net/index.php" method="post">
+                        <input type="hidden" name="cmd" value="_pay_simple">
+                        <input type="hidden" name="reset" value="1">
+                        <input type="hidden" name="merchant" value="606a89bb575311badf510a4a8b79a45e">
+                        <input type="hidden" name="currency" value="USD">
+                        <input type="hidden" name="amountf" value="10.00">
+                        <input type="hidden" name="item_name" value="Service Quelconque | Liste de services quelconque">
+                        <input type="hidden" name="item_desc" value="Description">
+                        <input type="hidden" name="success_url" value="http://www.yoursite.com/success">
+                        <button type="submit" class="btn btn-secondary btn-block my-4">Pay 5000 XFA in BitCoin</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script type="text/javascript" src="https://fr.monetbil.com/widget/v2/monetbil.min.js"></script>
+    <!-- JQuery -->
+    {% load static %} <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!-- Bootstrap tooltips -->
+    {% load static %} <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+    <!-- Bootstrap core JavaScript -->
+    {% load static %} <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- MDB core JavaScript -->
+    {% load static %} <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+</body>
+</html>
