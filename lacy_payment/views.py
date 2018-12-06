@@ -5,6 +5,9 @@ import urllib.request as urllib2
 import requests
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+from paypal.standard.forms import PayPalPaymentsForm
 from pip.utils import logging
 
 from .forms import CustomerForm
@@ -101,3 +104,28 @@ def checkMoMoPaymentStatus(request, paymentId):
 
 def payViaCrypto(request):
     return render(request, 'lacy_payment/page.html', locals())
+
+def payViaPayPal(request):
+    # What you want the button to do.
+    paypal_dict = {
+        "business": "sfaysamaritan@gmail.com",
+        "amount": "100.00",
+        "item_name": "name of the item",
+        "invoice": "unique-invoice-id",
+        "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),
+        "return": request.build_absolute_uri(reverse('paypal_success')),
+        "cancel_return": request.build_absolute_uri(reverse('paypal_error')),
+        "custom": "premium_plan",  # Custom command to correlate to some function later (optional)
+    }
+    # Create the instance.
+    form = PayPalPaymentsForm(initial=paypal_dict)
+    context = {"form": form}
+    return render(request, "lacy_payment/paypal_payment.html", context)
+
+@csrf_exempt
+def paypalReturnSuccess(request):
+    return render(request, "lacy_payment/paypal_success.html", locals())
+
+@csrf_exempt
+def paypalReturnError(request):
+    return render(request, "lacy_payment/paypal_error.html", locals())

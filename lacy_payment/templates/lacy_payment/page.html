@@ -13,7 +13,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-sm-12">
+            <div class="col-md-4 col-sm-12">
                 <div class="container">
 
                     {% comment %}
@@ -39,7 +39,7 @@
 
                 </div>
             </div>
-            <div class="col-md-6 col-sm-12">
+            <div class="col-md-4 col-sm-12">
                 <div class="container">
 
                     {% comment %}
@@ -67,6 +67,12 @@
 
                 </div>
             </div>
+
+            <div class="col-md-4 col-sm-12">
+                <!--<div id="paypal-button"></div> -->
+                <a class="btn btn-warning btn-block my-4" role="button" href="{% url "pay_via_paypal" %}">Pay 1 000 000 XFA Via PayPal</a>
+            </div>
+
         </div>
     </div>
 
@@ -80,5 +86,48 @@
     {% load static %} <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <!-- MDB core JavaScript -->
     {% load static %} <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    <script>
+      paypal.Button.render({
+        // Configure environment
+        env: 'sandbox',
+        client: {
+          sandbox: 'AcPv-19Ji3W3HPazdgXrCs4V5iBgUIe3Naid08ohFuGPPLEBe6UHzL61r0UQSfxvZqD0CyRi_03SHLu7',
+          production: 'AcPv-19Ji3W3HPazdgXrCs4V5iBgUIe3Naid08ohFuGPPLEBe6UHzL61r0UQSfxvZqD0CyRi_03SHLu7'
+        },
+        // Customize button (optional)
+        locale: 'en_US',
+        style: {
+          size: 'small',
+          color: 'gold',
+          shape: 'pill',
+        },
+
+        // Enable Pay Now checkout flow (optional)
+        commit: true,
+
+        // Set up a payment
+        payment: function(data, actions) {
+          return actions.payment.create({
+            transactions: [{
+              amount: {
+                total: '0.01',
+                currency: 'USD'
+              }
+            }]
+          });
+        },
+        // Execute the payment
+        onAuthorize: function(data, actions) {
+          return actions.payment.execute().then(function() {
+            // Show a confirmation message to the buyer
+            window.alert('Thank you for your purchase!');
+          });
+        }
+      }, '#paypal-button');
+
+    </script>
+
 </body>
 </html>
