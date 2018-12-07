@@ -53,6 +53,7 @@
                     <a class="btn btn-secondary btn-block my-4" role="button" href="{% url "pay_via_crypto" %}">Pay 0.00017 BitCoin</a>
                     {% endcomment %}
 
+                    <!-- FORMULAIRE DE PAIEMENT PAR CRYPTO MONNAIE - Les parametres sont similaires aux autres modes de paiement -->
                     <form action="https://www.coinpayments.net/index.php" method="post">
                         <input type="hidden" name="cmd" value="_pay_simple">
                         <input type="hidden" name="reset" value="1">
